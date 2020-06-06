@@ -1,0 +1,91 @@
+为了处理数据不平衡问题，使用了以下三种技术：
+A.使用集成交叉验证（CV）
+B.设置类别权重/重要性
+    代价敏感学习是使随机森林更适合从非常不平衡的数据中学习的方法之一。
+C.过大预测标签而不是过小预测（Over-Predict a Label than Under-Predict）
+
+A
+Model- 0 and CV- 0 recall: 0.5166666666666667, f1_score: 0.5145319031469359
+Model- 0 and CV- 1 recall: 0.49936628643852976, f1_score: 0.4813683567501527
+Model- 0 and CV- 2 recall: 0.5081967213114754, f1_score: 0.49779162394510607
+Model- 0 and CV- 3 recall: 0.5, f1_score: 0.48136835675015277
+Model- 0 and CV- 4 recall: 0.5081967213114754, f1_score: 0.49779162394510607
+1. The F-1 score of the model 0.4946540870520338
+2. The recall score of the model 0.5064738208980716
+3. Classification report
+               precision    recall  f1-score   support
+
+           0       0.93      1.00      0.96      3942
+           1       0.80      0.01      0.03       303
+
+    accuracy                           0.93      4245
+   macro avg       0.86      0.51      0.49      4245
+weighted avg       0.92      0.93      0.90      4245
+4. Confusion matrix
+ [[3941    1]
+ [ 299    4]]
+
+A+B
+Modified Ensemble
+Step 1: Predict probabilities instead of actual prediction.
+Step 2: Set the class weight.
+Step 3: Get probability distribution of minor class.
+Step 4: From the ROC curve and probability distribution obtain probability thresholds for classes.
+Step 5: Finally use the threshold to over-predict a label than under-predict.
+Model- 0 and CV- 0 recall: 0.5767427122940431, f1_score: 0.5672762640456006
+Model- 0 and CV- 1 recall: 0.6524714828897338, f1_score: 0.6148810180587738
+Model- 0 and CV- 2 recall: 0.616293584089207, f1_score: 0.5816445950107791
+Model- 0 and CV- 3 recall: 0.6416222850961139, f1_score: 0.6206027456027456
+Model- 0 and CV- 4 recall: 0.5956145460597487, f1_score: 0.5880323812726704
+1. The F-1 score of the model 0.5951187460921354
+2. The recall score of the model 0.6165601719989351
+3. Classification report
+               precision    recall  f1-score   support
+
+           0       0.95      0.91      0.93      3942
+           1       0.22      0.32      0.26       303
+
+    accuracy                           0.87      4245
+   macro avg       0.58      0.62      0.60      4245
+weighted avg       0.89      0.87      0.88      4245
+4. Confusion matrix
+ [[3599  343]
+ [ 206   97]]
+
+A+B+C
+threshold:0.6762739480034902, 0.3253165932645072
+1. The F-1 score of the model 0.5778653281137957
+2. The recall score of the model 0.6874306152076395
+3. Classification report
+               precision    recall  f1-score   support
+
+           0       0.96      0.81      0.88      3942
+           1       0.18      0.57      0.28       303
+
+    accuracy                           0.79      4245
+   macro avg       0.57      0.69      0.58      4245
+weighted avg       0.91      0.79      0.83      4245
+
+
+4. Confusion matrix
+ [[3182  760]
+ [ 131  172]]
+
+test
+1. The F-1 score of the model 0.5744506436775366
+2. The recall score of the model 0.6805762768057628
+3. Classification report
+               precision    recall  f1-score   support
+
+           0       0.96      0.81      0.88      1314
+           1       0.18      0.55      0.27       101
+
+    accuracy                           0.79      1415
+   macro avg       0.57      0.68      0.57      1415
+weighted avg       0.90      0.79      0.83      1415
+
+4. Confusion matrix
+ [[1060  254]
+ [  45   56]]
+参考连接
+https://yq.aliyun.com/articles/600963?utm_content=m_1000000693

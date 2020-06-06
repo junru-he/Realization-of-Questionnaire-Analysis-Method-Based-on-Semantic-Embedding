@@ -1,0 +1,91 @@
+在支持向量机中，C是负责惩罚错误分类数据的超参数。
+解决数据类别不平衡的一个方法就是使用基于类别增加权重的C值
+Cj=C∗wj
+其中，C是误分类的惩罚项，wj是与类别j的出现频率成反比的权重参数，Cj就是类别j对应的加权C值
+主要思路就是增大误分类 少数类别带来的影响，保证少数类别的分类正确性，避免被多数类别掩盖
+在scikit-learn 中，使用 svc 方法时，可以通过设置参数
+class_weight=’balanced’
+实现上述加权功能
+参数‘balanced’ 会自动按照以下公式计算权值：
+wj=n/k nj
+其中，wj为类别j对应权值，n为数据总数，k为类别数量，即数据有k个种类，nj是类别j的数据个数
+
+C=100, gamma=0.0001, kernel=rbf
+
+A
+Model- 0 and CV- 0 recall: 0.5160329531051965, f1_score: 0.5137032182903742
+Model- 0 and CV- 1 recall: 0.4987325728770596, f1_score: 0.48105134474327627
+Model- 0 and CV- 2 recall: 0.5409836065573771, f1_score: 0.5586007130124777
+Model- 0 and CV- 3 recall: 0.5, f1_score: 0.48136835675015277
+Model- 0 and CV- 4 recall: 0.5245901639344263, f1_score: 0.5291271419828641
+1. The F-1 score of the model 0.5135393792605761
+2. The recall score of the model 0.5161211326612113
+3. Classification report
+               precision    recall  f1-score   support
+
+           0       0.93      1.00      0.96      3942
+           1       0.77      0.03      0.06       303
+
+    accuracy                           0.93      4245
+   macro avg       0.85      0.52      0.51      4245
+weighted avg       0.92      0.93      0.90      4245
+
+4. Confusion matrix
+ [[3939    3]
+ [ 293   10]]
+
+A+B
+Model- 0 and CV- 0 recall: 0.6666349809885932, f1_score: 0.5559623430962344
+Model- 0 and CV- 1 recall: 0.7103929024081115, f1_score: 0.5598435955578813
+Model- 0 and CV- 2 recall: 0.707258467171507, f1_score: 0.5543831570028127
+Model- 0 and CV- 3 recall: 0.6538445535491387, f1_score: 0.5590828729281768
+Model- 0 and CV- 4 recall: 0.6618852459016393, f1_score: 0.5400944943096935
+1. The F-1 score of the model 0.554194414034231
+2. The recall score of the model 0.6799571509662381
+3. Classification report
+               precision    recall  f1-score   support
+
+           0       0.96      0.77      0.85      3942
+           1       0.16      0.59      0.26       303
+
+    accuracy                           0.75      4245
+   macro avg       0.56      0.68      0.55      4245
+weighted avg       0.90      0.75      0.81      4245
+4. Confusion matrix
+ [[3019  923]
+ [ 123  180]]
+
+A+B+C
+threshold:0.9025116840109315, 0.09783658687339668
+1. The F-1 score of the model 0.551328592217022
+2. The recall score of the model 0.6870701910373685
+3. Classification report
+               precision    recall  f1-score   support
+
+           0       0.96      0.75      0.85      3942
+           1       0.16      0.62      0.26       303
+
+    accuracy                           0.74      4245
+   macro avg       0.56      0.69      0.55      4245
+weighted avg       0.91      0.74      0.80      4245
+
+4. Confusion matrix
+ [[2971  971]
+ [ 115  188]]
+
+test
+1. The F-1 score of the model 0.5514963506455892
+2. The recall score of the model 0.698878791988788
+3. Classification report
+               precision    recall  f1-score   support
+
+           0       0.97      0.74      0.84      1314
+           1       0.16      0.65      0.26       101
+
+    accuracy                           0.74      1415
+   macro avg       0.56      0.70      0.55      1415
+weighted avg       0.91      0.74      0.80      1415
+
+4. Confusion matrix
+ [[978 336]
+ [ 35  66]]
